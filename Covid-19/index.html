@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   
+    <title>Covid-19 Self Assesment</title>
+
+
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+      
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <link href="css/main.css" rel="stylesheet" media="all">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+        
+        var jawab1 = false;
+        var jawab2 = false;
+        $('document').ready(function(){
+            $(".preloader").fadeOut(1000);
+           
+            $('.panel').hide();
+            $('#nama').focus();
+            $('#result').hide();
+
+            function kapitalisasi(kata){
+                var potong = kata.split(" "); /*dipisah antar spasi*/
+                for ( var i = 0; i < potong.length; i++ )
+                {
+                    var j = potong[i].charAt(0).toUpperCase(); /*mengubah huruf pertama ke uppercase*/
+                    potong[i] = j +potong[i].substr(1); /*menggabungkan huruf pertama dengan sisa huruf*/
+                }
+                return potong.join(" "); /*menggabungkan antar kata dalam kalimat*/
+            }
+
+
+            $('#nama').keyup(function(){
+                var inputNama = $('#nama').val();
+                if(inputNama==""){
+                    $('h2').text('Hai!');
+                }else{
+                    $('#textHelp').fadeOut('fast');
+                    $('h2').text('Hai, '+ kapitalisasi(inputNama) + '!');
+                }
+                
+            });
+
+            $('#mulai').click(function(){
+                var inputNama = $('#nama').val();
+                if(inputNama==""){
+                    $('#textHelp').fadeIn('fast');
+                    $('#nama').focus();
+                }else{
+                    $('#inialert').fadeOut('fast');
+                    $('#form').fadeOut('fast');
+                    $('h1').fadeOut('fast');
+                    $('h').delay('fast').fadeIn('fast');
+                    $('.panel').delay(500).fadeIn('slow');
+                    $('#pilihan1').hide();
+                    $('#pilihan2').hide();
+                    $('#pilihan1').fadeIn('slow');
+                }
+                event.preventDefault();
+
+            });
+
+            function muncul2(){
+                $('#pilihan1').fadeOut(500);
+                $('#pilihan2').delay(500).fadeIn(500);
+            }
+
+            $('#ya1').click(function(){
+                jawab1 = true;
+                muncul2();
+            });
+
+            $('#tidak1').click(function(){
+                muncul2();
+            });
+
+            function muncul3(){
+                if (jawab1==true && jawab2==true) {
+                    $('.panel').fadeOut(500);
+                    $('#peringatan').attr({
+                        'class':'alert alert-danger',
+                    });
+                    $('#peringatan').html("<p align='center'>Kami benar-benar mengkhawatirkan kesehatanmu. Segera hubungi <b>119 EXT 9</b> atau periksakan diri ke rumah sakit rujukan COVID-19 di daerahmu.</p>");
+                }else if(jawab1==true && jawab2==false){
+                    $('.panel').fadeOut(500);
+                    $('#peringatan').attr({
+                        'class':'alert alert-warning',
+                    });
+                    $('#peringatan').html("<p align='center'><b>Sebaiknya karantina diri kamu selama 14 hari</b> terhitung setelah kontak/kunjungan.<br><br>Jika kamu mengalami demam diatas 38&deg;C , pilek, batuk dan sesak napas selama masa karantina, segera hubungi <b>119 EXT 9</b> atau periksakan diri ke rumah sakit rujukan COVID-19 di daerahmu.</p>");
+                }else if(jawab1==false && jawab2==true){
+                    $('.panel').fadeOut(500);
+                    $('#peringatan').attr({
+                        'class':'alert alert-warning',
+                    });
+                    $('#peringatan').html("<p align='center'>Kami mengkhawatirkan kesehatanmu. Segera periksakan kamu ke dokter terdekat dan istirahat yang cukup!</p>");
+                }else{
+                    $('.panel').fadeOut(500);
+                    $('#peringatan').attr({
+                        'class':'alert alert-success',
+                    });
+                    $('#peringatan').html("<p align='center'>Kamu tidak perlu memeriksakan diri ke rumah sakit. Sebisa mungkin kamu #DiRumahAja agar dapat menekan angka penyebaran COVID-19. Selalu jaga kesehatanmu ya!</p>");
+                }
+                
+            }
+
+            $('#ya2').click(function(){
+                jawab2=true;
+                muncul3();
+                $('#result').delay(500).fadeIn(500);
+            });
+
+            $('#tidak2').click(function(){
+                muncul3();
+                $('#result').delay(500).fadeIn(500);
+            });
+
+            $('#ulang').click(function(){
+                location.reload();
+            });
+
+        });
+    </script>
+
+</head>
+
+<body>
+
+
+
+    <div class="page-wrapper bg-gra-01  p-b-100 font-poppins"> 
+
+    <p class="judul">- COVID-19 SELF ASSESMENT -</p>
+        <div class="wrapper wrapper--w780">     
+        
+        <div class="wrapper wrapper--w780">
+
+
+            <div class="card card-3">
+
+                <div class="card-heading">
+
+                </div>
+                <div class="card-body">
+                    <h2 class="title">Hai ! </h2>
+                    <form class="form" id="form">
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" 
+                            autocomplete="off" placeholder="Ketik nama anda ..." id="nama">
+                        </div>
+
+                        <button id="mulai" type="submit" class="btn btn--pill btn--green">Mulai</button>
+                        
+                    </form>
+
+                    <div class="panel panel-success">
+                    <div class="panel-heading">Jawab pertanyaan berikut!</div>
+                    <div class="panel-body">
+                        <div id="pilihan1">
+                            <p align="center">Apakah kamu pernah melakukan kontak dengan pasien positif Covid-19 (berada dalam satu ruangan yang sama/kontak dalam jarak 1 meter) ATAU pernah berkunjung ke negara/daerah endemis Covid-19 dalam 14 hari terakhir?</p><br>
+                            
+                                <button id="ya1" style="width: 100px;" type="button" class="btn btn--pill btn--green">YA</button>
+
+                                <button id="tidak1" style="width: 100px;" type="button" class="btn btn--pill btn--green">TIDAK</button>
+                            
+                        </div>
+
+                        <div id="pilihan2">
+                            <p align="center">Apakah kamu sedang atau pernah mengalami demam diatas 38&deg;C, pilek, batuk dan sesak napas?</p>
+                            <br>
+                                <button id="ya2" style="width: 100px;" type="button" class="btn btn--pill btn--green"><b>YA</b></button>
+
+                                <button id="tidak2" style="width: 100px;" type="button" class="btn btn--pill btn--green"><b>TIDAK</b></button>
+                           
+                        </div>
+
+                    </div>
+            </div>
+
+<div id="result">
+                    <div id="peringatan" class="alert" role="alert">
+        
+                    </div>
+                    <center>
+                        <button id="ulang" type="button" class="btn btn--pill btn--green"><i class="fas fa-undo"></i> Ulangi</button>
+                    </center>
+                </div>                
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="js/global.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->
